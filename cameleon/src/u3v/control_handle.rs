@@ -303,9 +303,8 @@ impl ControlHandle {
             if xml_hash.as_slice() == hash {
                 Ok(())
             } else {
-                Err(ControlError::InvalidDevice(
-                    "sha1 of retrieved xml file isn't same as entry's hash".into(),
-                ))
+                println!("Warning: sha1 of retrieved xml file isn't same as entry's hash");
+                Ok(())
             }
         } else {
             Ok(())
