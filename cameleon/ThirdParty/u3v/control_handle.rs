@@ -300,6 +300,10 @@ impl ControlHandle {
 
         if let Some(hash) = ent.sha1_hash(self)? {
             let xml_hash = sha1::Sha1::digest(xml);
+            use std::str;
+            //println!("XML String: {}", str::from_utf8(xml).unwrap());
+            println!("XML Hash: {:?}", xml_hash);
+            println!("Entry Hash: {:?}", hash);
             if xml_hash.as_slice() == hash {
                 Ok(())
             } else {
@@ -437,10 +441,19 @@ impl DeviceControl for ControlHandle {
                 let file_size: usize = unwrap_or_log!(file.size().try_into());
                 let mut xml = Vec::with_capacity(file_size);
                 unwrap_or_log!(file.read_to_end(&mut xml).map_err(zip_err));
+
+                // Verify retrieved xml has correct hash.
+                unwrap_or_log!(self.verify_xml(&xml, ent));
+
                 Ok(String::from_utf8_lossy(&xml).into())
             }
 
-            CompressionType::Uncompressed => Ok(String::from_utf8_lossy(&buf).into()),
+            CompressionType::Uncompressed => {
+                // Verify retrieved xml has correct hash.
+                unwrap_or_log!(self.verify_xml(&buf, ent));
+
+                Ok(String::from_utf8_lossy(&buf).into())
+            }   
         }
     }
 
