@@ -148,6 +148,7 @@ pub mod genapi;
 pub mod payload;
 #[cfg(feature = "libusb")]
 pub mod u3v;
+pub mod genicam;
 
 pub use camera::{Camera, CameraInfo, DeviceControl, PayloadStream};
 

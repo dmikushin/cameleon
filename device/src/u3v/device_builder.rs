@@ -84,7 +84,8 @@ impl DeviceBuilder {
             .ok_or(Error::InvalidDevice)?;
         let device_info_desc = ctrl_iface_desc.extra();
         let device_info_desc = DeviceInfoDescriptor::from_bytes(device_info_desc)?;
-        let device_info = device_info_desc.interpret(&dev_channel)?;
+        let device_desc = self.device.device_descriptor()?;
+        let device_info = device_info_desc.interpret(&dev_channel, device_desc.vendor_id(), device_desc.product_id())?;
 
         // Retrieve event and stream interface information if exists.
         let receive_ifaces = interfaces.filter_map(|iface| ReceiveIfaceInfo::new(&iface));
@@ -323,7 +324,7 @@ impl DeviceInfoDescriptor {
         })
     }
 
-    fn interpret(&self, channel: &RusbDeviceHandle) -> Result<DeviceInfo> {
+    fn interpret(&self, channel: &RusbDeviceHandle, vid: u16, pid: u16) -> Result<DeviceInfo> {
         let gencp_version = Version::new(
             self.gencp_version_major.into(),
             self.gencp_version_minor.into(),
@@ -379,6 +380,8 @@ impl DeviceInfoDescriptor {
             serial_number,
             user_defined_name,
             supported_speed,
+            vid: vid,
+            pid: pid,
         })
     }
 }

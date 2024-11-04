@@ -45,6 +45,12 @@ pub struct DeviceInfo {
 
     /// Bus speed supported by the device.
     pub supported_speed: BusSpeed,
+
+    /// Vendor ID.
+    pub vid: u16,
+    
+    /// Product ID.
+    pub pid: u16,
 }
 
 /// Bus speed supported by each USB device.

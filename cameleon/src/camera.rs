@@ -126,7 +126,7 @@ pub struct Camera<Ctrl, Strm, Ctxt = DefaultGenApiCtxt> {
     /// `GenApi context` of the camera.
     pub ctxt: Option<Ctxt>,
     /// Information of the camera.
-    info: CameraInfo,
+    pub info: CameraInfo,
 }
 
 macro_rules! expect_node {
@@ -523,6 +523,10 @@ pub struct CameraInfo {
     pub model_name: String,
     ///Serial number of the camera.
     pub serial_number: String,
+    /// Vendor ID.
+    pub vid: u16,
+    /// Product ID.
+    pub pid: u16,
 }
 
 /// This trait provides operations on the device's memory.

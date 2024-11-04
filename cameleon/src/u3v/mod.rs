@@ -91,6 +91,8 @@ pub fn enumerate_cameras() -> CameleonResult<Vec<Camera<ControlHandle, StreamHan
             vendor_name: dev_info.vendor_name,
             model_name: dev_info.model_name,
             serial_number: dev_info.serial_number,
+            vid : dev_info.vid,
+            pid : dev_info.pid,
         };
 
         let camera: Camera<ControlHandle, StreamHandle, DefaultGenApiCtxt> =
