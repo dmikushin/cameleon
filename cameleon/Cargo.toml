@@ -27,6 +27,7 @@ cameleon-device = { path = "../device", version = "0.1.13" }
 cameleon-genapi = { path = "../genapi", version = "0.1.13" }
 anyhow = "1.0.40"
 libc = "0.2"
+ctrlc = "3.4.5"
 
 [dev-dependencies]
 trybuild = "1.0.42"
@@ -42,6 +43,11 @@ required-features = ["libusb"]
 [[example]]
 name = "stream"
 path = "examples/stream.rs"
+required-features = ["libusb"]
+
+[[example]]
+name = "benchmark"
+path = "examples/benchmark.rs"
 required-features = ["libusb"]
 
 [[example]]
